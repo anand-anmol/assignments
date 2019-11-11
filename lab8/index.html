@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LAB 8</title>
+</head>
+<body>
+    <script>
+
+// PART A
+
+        let alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
+        function generateButtons (numOfButtons) {
+
+            alphaSlice = alpha.slice(0 , numOfButtons)
+
+            for (i in alphaSlice) {
+
+                let btn = document.createElement("button");
+                document.body.appendChild(btn);
+
+                btn.innerHTML = alphaSlice[i];
+                btn.id = alphaSlice[i];
+
+                document.getElementById(btn.id).onclick = function() {console.log("Button " + btn.id + " was clicked.")}
+
+            }
+
+        }
+
+        generateButtons(10);
+
+// PART B
+
+        function recipe (title, servings, ingredients) {
+        
+            this.title = title;
+            this.servings = servings;
+            this.ingredients = ingredients;
+
+            this.print = function() {
+        
+                document.write("<b><br>Title: " + this.title, "<br><br>");
+                document.write("Serves: ", this.servings, "<br><br>");
+                document.write("Ingredients: ", "<br><br>");
+        
+                for (i in this.ingredients) {
+                    document.write(this.ingredients[i], "<br><br>");
+                }
+        
+                document.write("</b>")
+        
+            }
+        
+        }
+
+        recipe1 = new recipe ("Hummus", 6, ["Chickpeas",'Salt', 'cumin', 'paprika']);
+        recipe1.print();
+
+    </script>
+</body>
+</html>
