@@ -41,6 +41,7 @@
             this.order = order;
             this.btn.id = order;
             document.body.appendChild(this.btn);
+            this.btn.disabled = true;
             this.btn.onclick = function () {
                 clickedButtons.push(order);
                 clickButtons();
@@ -52,6 +53,9 @@
             }
             this.makeClickingHappen = function () {
                 this.btn.onclick = clickButtons(this.btn.id);
+            }
+            this.makeClickable = function () {
+                this.btn.disabled = false;
             }
         }
 
@@ -93,6 +97,7 @@
                         (Math.random() * (window.innerHeight - 60)) + "px",
                         (Math.random() * (window.innerWidth - 120)) + "px"
                     )
+                    buttons[j].makeClickable();
                 }
             }, buttons.length * 1000);
         }
