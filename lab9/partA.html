@@ -1,0 +1,77 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lab 9A</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <h1>How many buttons to create?</h1>
+    <input type="text" id="numOfButtons" name="numOfButtons">
+    <input type="submit" value="Go" onclick="inputValidation()"><br><br>
+    <p id='inputVal'></p>
+    <script>
+
+        let buttons = [];
+
+        function inputValidation() {
+            let input = document.getElementById("numOfButtons").value;
+            if (input < 5) {
+                document.getElementById('inputVal').innerHTML = "Number too small. Enter a number between 5 and 100."
+            }
+            else if (input > 100) {
+                document.getElementById('inputVal').innerHTML = "Number too big. Enter a number between 5 and 100."
+            }
+            else {
+                document.getElementById('inputVal').innerHTML = "";
+                createButtons(input);
+            }
+        }
+
+        function Button(color, width, height, order) {
+            this.btn = document.createElement("button");
+            this.btn.style.backgroundColor = color;
+            this.btn.style.height = height;
+            this.btn.style.width = width;
+            this.order = order;
+            this.btn.id = order;
+            document.body.appendChild(this.btn);
+            this.setLocation = function (top, left) {
+                this.btn.style.position = "absolute";
+                this.btn.style.left = left;
+                this.btn.style.top = top;
+            }
+        }
+
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function createButtons(n) {
+            for (let i = 0; i < n; i++) {
+                buttons.push(new Button(getRandomColor(), "120px", "60px", i));
+            }
+
+        }
+
+        setInterval(function () {
+            for (let j = 0; j < buttons.length; j++) {
+                buttons[j].setLocation(
+                    (Math.random() * (window.innerHeight - 60)) + "px",
+                    (Math.random() * (window.innerWidth - 120)) + "px"
+                )
+            }
+        }, 2000);
+
+    </script>
+</body>
+
+</html>

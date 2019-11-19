@@ -1,0 +1,103 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lab 9B</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <h1>How many buttons to create?</h1>
+    <input type="text" id="numOfButtons" name="numOfButtons">
+    <input type="submit" value="Go" onclick="inputValidation(); initialMove()"><br><br>
+    <p id='inputVal'></p>
+    <script>
+
+        let buttons = [];
+        let clickedButtons = [];
+        let clickCounter = 0;
+
+        function inputValidation() {
+            let input = document.getElementById("numOfButtons").value;
+            if (input < 5) {
+                document.getElementById('inputVal').innerHTML = "Number too small. Enter a number between 5 and 100."
+            }
+            else if (input > 100) {
+                document.getElementById('inputVal').innerHTML = "Number too big. Enter a number between 5 and 100."
+            }
+            else {
+                document.getElementById('inputVal').innerHTML = "";
+                createButtons(input);
+            }
+        }
+
+        function Button(color, width, height, order) {
+            this.btn = document.createElement("button");
+            this.btn.style.backgroundColor = color;
+            this.btn.style.height = height;
+            this.btn.style.width = width;
+            this.order = order;
+            this.btn.id = order;
+            document.body.appendChild(this.btn);
+            this.btn.onclick = function () {
+                clickedButtons.push(order);
+                clickButtons();
+            }
+            this.setLocation = function (top, left) {
+                this.btn.style.position = "absolute";
+                this.btn.style.left = left;
+                this.btn.style.top = top;
+            }
+            this.makeClickingHappen = function () {
+                this.btn.onclick = clickButtons(this.btn.id);
+            }
+        }
+
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function createButtons(n) {
+            for (let i = 0; i < n; i++) {
+                buttons.push(new Button(getRandomColor(), "120px", "60px", i));
+            }
+        }
+
+        function clickButtons () {
+            console.log(clickedButtons[clickCounter]);
+            console.log(buttons[clickCounter].order);
+            if((clickedButtons[clickCounter] == buttons[clickCounter].order) && (clickedButtons.length == buttons.length)) {
+                document.getElementById("inputVal").innerHTML = "Excellent Memory.";
+            }
+            else if (clickedButtons[clickCounter] == buttons[clickCounter].order) {
+                document.getElementById("inputVal").innerHTML = "Good job. You have " + (buttons.length - clickedButtons.length) + " buttons left to click.";
+                clickCounter += 1;
+            }
+            else {
+                document.getElementById("inputVal").innerHTML = "You messed up. Refresh the page to try again.";
+            }
+        }    
+
+
+        function initialMove() {
+            setTimeout(function () {
+                for (let j = 0; j < buttons.length; j++) {
+                    buttons[j].setLocation(
+                        (Math.random() * (window.innerHeight - 60)) + "px",
+                        (Math.random() * (window.innerWidth - 120)) + "px"
+                    )
+                }
+            }, buttons.length * 1000);
+        }
+
+    </script>
+</body>
+
+</html>
